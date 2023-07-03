@@ -218,7 +218,7 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- logou popup | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/logout-popup-widget
-    awful.key({ modkey }, "l", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
+    awful.key({ modkey }, "F4", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 
     -- volume-widget | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/volume-widget
     awful.key({ modkey }, "]", function() volume_widget:inc(5) end),
