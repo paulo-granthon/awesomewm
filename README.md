@@ -1,3 +1,3 @@
-Those are my `.config/awesome` files for customizing the linux window manager AwesomeWM
+Those are my `.config/awesome` files for customizing the linux window manager [AwesomeWM](https://awesomewm.org/) 
 
-[AwesomeWM](https://awesomewm.org/)
+
