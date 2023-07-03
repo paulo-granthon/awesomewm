@@ -18,6 +18,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -210,7 +215,16 @@ globalkeys = gears.table.join(
 
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+
+    -- logou popup | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/logout-popup-widget
+    awful.key({ modkey }, "l", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
+
+    -- volume-widget | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/volume-widget
+    awful.key({ modkey }, "]", function() volume_widget:inc(5) end),
+    awful.key({ modkey }, "[", function() volume_widget:dec(5) end),
+    awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+
 )
 
 clientkeys = gears.table.join(
@@ -262,6 +276,7 @@ clientkeys = gears.table.join(
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
+
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
@@ -272,6 +287,7 @@ for i = 1, 9 do
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
+        
         -- Toggle tag display.
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
@@ -282,6 +298,7 @@ for i = 1, 9 do
                       end
                   end,
                   {description = "toggle tag #" .. i, group = "tag"}),
+
         -- Move client to tag.
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
@@ -451,10 +468,11 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- custom config |  https://www.youtube.com/watch?v=JONiwmvi3q0
-beautiful.useless_gap=8
 
--- custom config | Paulo Granthon
+
+
+-- custom config
+beautiful.useless_gap = 8
 require("gears").wallpaper.maximized("/home/paulo/Downloads/wp.jpg", require("awful").screen.focused())
 
 -- start picom compositor
@@ -465,3 +483,5 @@ awful.spawn.easy_async_with_shell("killall polybar", function()
     awful.spawn.with_shell("polybar --config=~/.config/polybar/config.ini")
 end)
 
+
+    
