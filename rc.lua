@@ -223,7 +223,7 @@ globalkeys = gears.table.join(
     -- volume-widget | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/volume-widget
     awful.key({ modkey }, "]", function() volume_widget:inc(5) end),
     awful.key({ modkey }, "[", function() volume_widget:dec(5) end),
-    awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+    awful.key({ modkey }, "\\", function() volume_widget:toggle() end)
 
 )
 
