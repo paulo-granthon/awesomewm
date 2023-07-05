@@ -227,7 +227,7 @@ globalkeys = gears.table.join(
 
 	-- backlight \ brightness
 	awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
-	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end)
+	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
 	-- screenshot with custom script
 	awful.key({ modkey }, "Print", function() awful.spawn.with_shell("sshot") end)
