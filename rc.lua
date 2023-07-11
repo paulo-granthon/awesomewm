@@ -230,8 +230,12 @@ globalkeys = gears.table.join(
 	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
 	-- screenshot with custom script
-	awful.key({ modkey }, "Print", function() awful.spawn.with_shell("sshot") end)
+	awful.key({ modkey }, "Print", function() awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
+		naughty.notify { text = stdout } 
+		end)
+	end)
 )
+
 
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
@@ -490,4 +494,7 @@ awful.spawn.easy_async_with_shell("killall polybar", function()
 end)
 
 
-    
+awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
+	naughty.notify { text = stdout } 
+end)
+
