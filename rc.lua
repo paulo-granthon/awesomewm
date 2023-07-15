@@ -496,5 +496,8 @@ end)
 
 awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
 	naughty.notify { text = stdout } 
+	naughty.notify { text = stderr } 
+	naughty.notify { text = reason } 
+	naughty.notify { text = exit_code } 
 end)
 
