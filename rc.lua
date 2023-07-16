@@ -18,10 +18,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
-local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -66,7 +63,22 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    awful.layout.suit.fair,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.spiral.dwindle,
+--    awful.layout.suit.tile.bottom,
+--    awful.layout.suit.tile.top,
+--    awful.layout.suit.fair.horizontal,
+--    awful.layout.suit.spiral,
+--    awful.layout.suit.max,
+--    awful.layout.suit.max.fullscreen,
+--    awful.layout.suit.magnifier,
+--    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.ne,
+    -- awful.layout.suit.corner.sw,
+    -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -80,8 +92,6 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
-beautiful.menu_height=32
-beautiful.menu_width=128
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
                                     { "firefox", "firefox" },
@@ -89,9 +99,59 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                   }
                         })
 
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     menu = mymainmenu })
+
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
+
+-- Keyboard map indicator and switcher
+mykeyboardlayout = awful.widget.keyboardlayout()
+
+-- {{{ Wibar
+-- Create a textclock widget
+mytextclock = wibox.widget.textclock()
+
+-- Create a wibox for each screen and add it
+local taglist_buttons = gears.table.join(
+                    awful.button({ }, 1, function(t) t:view_only() end),
+                    awful.button({ modkey }, 1, function(t)
+                                              if client.focus then
+                                                  client.focus:move_to_tag(t)
+                                              end
+                                          end),
+                    awful.button({ }, 3, awful.tag.viewtoggle),
+                    awful.button({ modkey }, 3, function(t)
+                                              if client.focus then
+                                                  client.focus:toggle_tag(t)
+                                              end
+                                          end),
+                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+                )
+
+local tasklist_buttons = gears.table.join(
+                     awful.button({ }, 1, function (c)
+                                              if c == client.focus then
+                                                  c.minimized = true
+                                              else
+                                                  c:emit_signal(
+                                                      "request::activate",
+                                                      "tasklist",
+                                                      {raise = true}
+                                                  )
+                                              end
+                                          end),
+                     awful.button({ }, 3, function()
+                                              awful.menu.client_list({ theme = { width = 250 } })
+                                          end),
+                     awful.button({ }, 4, function ()
+                                              awful.client.focus.byidx(1)
+                                          end),
+                     awful.button({ }, 5, function ()
+                                              awful.client.focus.byidx(-1)
+                                          end))
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -115,6 +175,51 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
+    -- Create a promptbox for each screen
+    s.mypromptbox = awful.widget.prompt()
+    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+    -- We need one layoutbox per screen.
+    s.mylayoutbox = awful.widget.layoutbox(s)
+    s.mylayoutbox:buttons(gears.table.join(
+                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
+                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
+                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+    -- Create a taglist widget
+    s.mytaglist = awful.widget.taglist {
+        screen  = s,
+        filter  = awful.widget.taglist.filter.all,
+        buttons = taglist_buttons
+    }
+
+    -- Create a tasklist widget
+    s.mytasklist = awful.widget.tasklist {
+        screen  = s,
+        filter  = awful.widget.tasklist.filter.currenttags,
+        buttons = tasklist_buttons
+    }
+
+    -- Create the wibox
+    s.mywibox = awful.wibar({ position = "top", screen = s })
+
+    -- Add widgets to the wibox
+    s.mywibox:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            mylauncher,
+            s.mytaglist,
+            s.mypromptbox,
+        },
+        s.mytasklist, -- Middle widget
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            mykeyboardlayout,
+            wibox.widget.systray(),
+            mytextclock,
+            s.mylayoutbox,
+        },
+    }
 end)
 -- }}}
 
@@ -213,6 +318,16 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
+    awful.key({ modkey }, "x",
+              function ()
+                  awful.prompt.run {
+                    prompt       = "Run Lua code: ",
+                    textbox      = awful.screen.focused().mypromptbox.widget,
+                    exe_callback = awful.util.eval,
+                    history_path = awful.util.get_cache_dir() .. "/history_eval"
+                  }
+              end,
+              {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
@@ -234,8 +349,8 @@ globalkeys = gears.table.join(
 		naughty.notify { text = stdout } 
 		end)
 	end)
-)
 
+)
 
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
@@ -286,7 +401,6 @@ clientkeys = gears.table.join(
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
-
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
@@ -297,7 +411,6 @@ for i = 1, 9 do
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
-        
         -- Toggle tag display.
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
@@ -308,7 +421,6 @@ for i = 1, 9 do
                       end
                   end,
                   {description = "toggle tag #" .. i, group = "tag"}),
-
         -- Move client to tag.
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
@@ -357,7 +469,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = 0,
+      properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
@@ -366,10 +478,6 @@ awful.rules.rules = {
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
-    },
-
-    { rule_any = { class = {"Polybar"}},
-        properties = { focusable = false }
     },
 
     -- Floating clients.
@@ -478,26 +586,17 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-
-
-
 -- custom config
 beautiful.useless_gap = 8
 require("gears").wallpaper.maximized("/home/paulo/Downloads/wp.jpg", require("awful").screen.focused())
 
 -- start picom compositor
-awful.spawn.with_shell("picom --experimental-backends --config ~/.config/picom/picom.conf -b")
-
--- waits for killall before starting polybar to prevent multiple polybar processes from running when restarting the window manager
-awful.spawn.easy_async_with_shell("killall polybar", function()
-    awful.spawn.with_shell("polybar --config=~/.config/polybar/config.ini")
-end)
-
+awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
 
 awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
-	naughty.notify { text = stdout } 
-	naughty.notify { text = stderr } 
-	naughty.notify { text = reason } 
-	naughty.notify { text = exit_code } 
+	naughty.notify { text = stdout }
+	naughty.notify { text = stderr }
+	naughty.notify { text = reason }
+	naughty.notify { text = exit_code }
 end)
 
