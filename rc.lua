@@ -18,7 +18,32 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+-- awesome-wm-widgets
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+
+local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
+local volume_widget_instance = volume_widget {
+    mixer_cmd = nil,
+    widget_type = 'arc',
+    tooltip = true,
+}
+
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local cw = calendar_widget({
+    theme = 'dark',
+    placement = 'top_right',
+    start_sunday = true,
+    radius = 4,
+    previous_month_button = 4, -- scroll up
+    next_month_button = 5,     -- scroll down
+})
+local mytextclock = wibox.widget.textclock()
+mytextclock:connect_signal("button::press", function(_, _, _, button)
+    if button == 1 then cw.toggle() end
+end)
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -107,11 +132,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+--mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+--mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -196,28 +221,69 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+
+        style = {
+            shape_border_width = 1,
+            shape_border_color = beautiful.border_normal,
+            shape  = gears.shape.rectangle,
+        },
+        layout   = {
+            layout  = wibox.layout.flex.horizontal
+        },
+        widget_template = {
+            {
+                {
+                    {
+                        id     = 'clienticon',
+                        widget = awful.widget.clienticon,
+                        halign = 'center',
+                    },
+                    top = 0,
+                    bottom = 0,
+                    left = 16,
+                    right = 16,
+                    halign = 'center',
+                    widget  = wibox.container.margin
+                },
+                halign = 'center',
+                id     = 'background_role',
+                widget = wibox.container.background,
+
+            },
+            create_callback = function(self, c, index, objects) --luacheck: no unused args
+                self:get_children_by_id('clienticon')[1].client = c
+            end,
+            layout = wibox.layout.align.vertical,
+        },
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({
+        position = "top",
+        border_color = '#ff0000',
+        screen = s
+    })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
+        expand = "none",
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            logout_menu_widget(),
             s.mytaglist,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            -- mykeyboardlayout,
             wibox.widget.systray(),
+            volume_widget_instance,
             mytextclock,
             s.mylayoutbox,
+            -- mylauncher,
         },
     }
 end)
@@ -336,11 +402,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "F4", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 
     -- volume-widget | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/volume-widget
-    awful.key({ modkey }, "]", function() awful.spawn.with_shell("pulseaudio-control down") end),
-    awful.key({ modkey }, "[", function() awful.spawn.with_shell("pulseaudio-control up") end),
-    awful.key({ modkey }, "\\", function() awful.spawn.with_shell("pulseaudio-control togmute") end),
+    awful.key({ modkey }, "]", function () volume_widget:inc(5) end),
+    awful.key({ modkey }, "[", function () volume_widget:dec(5) end),
+    awful.key({ modkey }, "/", function () volume_widget:toggle() end),
 
-	-- backlight \ brightness
 	awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
 	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
@@ -469,7 +534,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { border_width = 0,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
