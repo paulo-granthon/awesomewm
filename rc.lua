@@ -412,15 +412,13 @@ globalkeys = gears.table.join(
 	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
 	-- screenshot with custom script
-	awful.key({ modkey }, "Print", function() awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
-		naughty.notify { text = stdout } 
-		end)
-	end)
+	awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
+	awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
 
 )
 
 clientkeys = gears.table.join(
-    awful.key({ modkey,           }, "f",
+    awful.key({ modkey }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
             c:raise()
@@ -659,11 +657,4 @@ require("gears").wallpaper.maximized("/home/paulo/Downloads/wp.jpg", require("aw
 
 -- start picom compositor
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
-
-awful.spawn.easy_async("sshot", function(stdout, stderr, reason, exit_code)
-	naughty.notify { text = stdout }
-	naughty.notify { text = stderr }
-	naughty.notify { text = reason }
-	naughty.notify { text = exit_code }
-end)
 
