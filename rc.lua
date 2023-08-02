@@ -405,8 +405,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "F4", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 
     -- volume-widget | https://github.com/raven2cz/awesomewm-config/tree/master/awesome-wm-widgets/volume-widget
-    awful.key({ modkey }, "]", function () volume_widget:inc(5) end),
-    awful.key({ modkey }, "[", function () volume_widget:dec(5) end),
+    awful.key({ modkey }, "[", function () volume_widget:inc(5) end),
+    awful.key({ modkey }, "]", function () volume_widget:dec(5) end),
     awful.key({ modkey }, "/", function () volume_widget:toggle() end),
 
 	awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
