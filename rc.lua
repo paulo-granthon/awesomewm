@@ -2,11 +2,7 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
-<<<<<<< HEAD
 local THEME = 'green'
-=======
-local THEME = 'purple'
->>>>>>> main
 
 -- Standard awesome library
 local gears = require("gears")
