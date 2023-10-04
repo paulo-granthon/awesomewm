@@ -3,18 +3,16 @@
 pcall(require, "luarocks.loader")
 
 THEME = require("theme")
-local lfs = require("lfs")
-local directory = './themes/'
-for file in lfs.dir(directory) do
-    if file:match("%.lua$") then
-        local moduleName = file:gsub("%.lua$", "")
-        local success, moduleValue = pcall(require, directory .. moduleName)
 
-        if not success or moduleValue ~= moduleName then
-            THEME = 'purple'
-        end
-    end
+-- Call the Bash script with the THEME as an argument
+local status, result = os.execute("./verify_themes.sh " .. THEME)
+if status == 0 and result ~= nil then
+    THEME = result:match("[^\n]+") -- Extract the first line of output
+else
+    THEME = 'purple' -- Default theme in case of an error
 end
+
+print("Selected theme:", THEME)
 
 -- Standard awesome library
 local gears = require("gears")
