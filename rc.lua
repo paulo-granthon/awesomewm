@@ -2,13 +2,12 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+-- load the theme from theme.lua
 THEME = require("theme")
 
 -- Call the Bash script with the THEME as an argument
-local status, result = os.execute("./verify_themes.sh " .. THEME)
-if status == 0 and result ~= nil then
-    THEME = result:match("[^\n]+") -- Extract the first line of output
-else
+local status = os.execute("./verify_themes.sh " .. THEME)
+if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
 
