@@ -421,13 +421,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "]", function () volume_widget:dec(5) end),
     awful.key({ modkey }, "/", function () volume_widget:toggle() end),
 
-	awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
-	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
+    awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
+    awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
-	-- screenshot with custom script
-	awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
-	awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
-
+    -- screenshot with custom script
+    awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
+    awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
 )
 
 clientkeys = gears.table.join(
@@ -670,4 +669,3 @@ require("gears").wallpaper.maximized("/home/paulo/Downloads/wp.jpg", require("aw
 
 -- start picom compositor
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
-
