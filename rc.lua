@@ -2,7 +2,19 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
-local THEME = 'purple'
+THEME = require("theme")
+local lfs = require("lfs")
+local directory = './themes/'
+for file in lfs.dir(directory) do
+    if file:match("%.lua$") then
+        local moduleName = file:gsub("%.lua$", "")
+        local success, moduleValue = pcall(require, directory .. moduleName)
+
+        if not success or moduleValue ~= moduleName then
+            THEME = 'purple'
+        end
+    end
+end
 
 -- Standard awesome library
 local gears = require("gears")
