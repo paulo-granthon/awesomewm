@@ -658,4 +658,3 @@ require("gears").wallpaper.maximized("/home/paulo/Downloads/wp.jpg", require("aw
 
 -- start picom compositor
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
-
