@@ -2,7 +2,17 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
-local THEME = 'green'
+THEME = require("theme")
+
+-- Call the Bash script with the THEME as an argument
+local status, result = os.execute("./verify_themes.sh " .. THEME)
+if status == 0 and result ~= nil then
+    THEME = result:match("[^\n]+") -- Extract the first line of output
+else
+    THEME = 'purple' -- Default theme in case of an error
+end
+
+print("Selected theme:", THEME)
 
 -- Standard awesome library
 local gears = require("gears")
@@ -75,7 +85,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init(string.format("%s/.config/awesome/themes/"..THEME..'.lua', os.getenv("HOME")))
+beautiful.init(string.format("%s/.config/awesome/themes/"..THEME..".lua", os.getenv("HOME")))
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -409,13 +419,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "]", function () volume_widget:dec(5) end),
     awful.key({ modkey }, "/", function () volume_widget:toggle() end),
 
-	awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
-	awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
+    awful.key({ modkey }, "F9", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-up") end),
+    awful.key({ modkey }, "F8", function() awful.spawn.with_shell("~/.config/polybar/scripts/backlight.sh --scroll-down") end),
 
-	-- screenshot with custom script
-	awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
-	awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
-
+    -- screenshot with custom script
+    awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
+    awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
 )
 
 clientkeys = gears.table.join(
