@@ -9,6 +9,8 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
+WALLPAPER = 'green'
+
 local theme = {}
 
 theme.font          = "sans 8"
