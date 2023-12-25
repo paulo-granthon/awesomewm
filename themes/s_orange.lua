@@ -15,36 +15,40 @@ local theme = {}
 
 theme.font          = "sans 8"
 
-local orange = "#f1903c";
+local primary = "#25d7b5"
+local secondary = "#f1903c"
+local tertiary = "#2e0503"
 
-theme.bg_normal     = orange .. "aa"
-theme.bg_focus      = "#25d7b5"
-theme.bg_minimize   = "#2e0503"
-theme.bg_systray    = orange
+theme.bg_focus      = primary
+theme.bg_normal     = secondary .. "aa"
+theme.bg_minimize   = tertiary
+theme.bg_systray    = secondary
 theme.bg_urgent     = "#ff00ff"
 
 theme.fg_normal     = "#ffffff"
-theme.fg_focus      = theme.bg_minimize
+theme.fg_focus      = tertiary
 theme.fg_minimize   = "#bbbbbb"
 theme.fg_urgent     = "#dfff13"
 
-theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(0)
 theme.border_normal = "#090000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
-theme.taglist_fg_focus = theme.bg_minimize
+theme.tasklist_bg_normal = secondary .. "cc"
+
+theme.taglist_fg_focus = tertiary
 theme.taglist_fg_empty = "#406965"
-theme.taglist_fg_occupied = orange
-theme.tooltip_bg_color = orange
+theme.taglist_fg_occupied = secondary
 
-theme.prompt_bg = theme.bg_minimize
-theme.prompt_bg = theme.bg_focus
-theme.prompt_bg_cursor = theme.bg_focus
-theme.prompt_fg_cursor = "#ff00ff"
+theme.tooltip_bg_color = secondary
 
-theme.hotkeys_bg = "" .. theme.bg_minimize .. "dd"
+theme.prompt_bg = tertiary
+theme.prompt_fg = theme.bg_focus
+
+theme.hotkeys_bg = tertiary .. "dd"
+
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(0)
 
 -- There are other variable sets
 -- overriding the default one when
