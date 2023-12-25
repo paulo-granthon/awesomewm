@@ -663,7 +663,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- custom config
 beautiful.useless_gap = 8
-require("gears").wallpaper.maximized("/home/paulo/pics/wallpaper/" .. WALLPAPER .. ".jpg", require("awful").screen.focused())
+require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/pics/wallpaper/" .. WALLPAPER .. ".jpg", require("awful").screen.focused())
 
 -- start picom compositor
 awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
