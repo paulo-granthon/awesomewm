@@ -3,6 +3,7 @@
 pcall(require, "luarocks.loader")
 
 -- load the theme from theme.lua
+WALLPAPER = ""
 THEME = require("theme")
 
 -- Call the Bash script with the THEME as an argument
