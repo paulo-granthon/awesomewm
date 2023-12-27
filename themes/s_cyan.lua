@@ -9,7 +9,8 @@ WALLPAPER = 's_cyan'
 
 local theme = {}
 
-theme.font          = "sans 8"
+FONT_SIZE = 8
+theme.font          = "sans " .. FONT_SIZE
 
 local primary = "#5eced0"
 local secondary = "#66494b"

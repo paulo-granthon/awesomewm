@@ -9,7 +9,8 @@ WALLPAPER = 'green'
 
 local theme = {}
 
-theme.font          = "sans 8"
+FONT_SIZE = 8
+theme.font          = "sans " .. FONT_SIZE
 
 theme.bg_focus      = "#0d7f0aef"
 theme.bg_normal     = "#00000092"

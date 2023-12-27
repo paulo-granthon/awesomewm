@@ -9,7 +9,8 @@ WALLPAPER = 's_orange'
 
 local theme = {}
 
-theme.font          = "sans 8"
+FONT_SIZE = 8
+theme.font          = "sans " .. FONT_SIZE
 
 local primary = "#25d7b5"
 local secondary = "#f1903c"
