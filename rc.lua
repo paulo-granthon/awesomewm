@@ -237,6 +237,8 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
+    WIBOX_HEIGHT = FONT_SIZE * 2.5
+
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
         screen          = s,
@@ -252,23 +254,28 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.flex.horizontal
         },
         widget_template = {
+            forced_height = WIBOX_HEIGHT,
             {
                 {
                     {
                         id     = 'clienticon',
                         widget = awful.widget.clienticon,
                         halign = 'center',
+                        forced_height = WIBOX_HEIGHT,
+                        forced_width = WIBOX_HEIGHT,
                     },
                     top    = 0,
                     bottom = 0,
                     left   = 16,
                     right  = 16,
                     halign = 'center',
-                    widget = wibox.container.margin
+                    widget = wibox.container.margin,
+                    forced_height = WIBOX_HEIGHT,
                 },
                 halign = 'center',
                 id     = 'background_role',
                 widget = wibox.container.background,
+                forced_height = WIBOX_HEIGHT,
 
             },
             create_callback = function(self, c, index, objects) --luacheck: no unused args
