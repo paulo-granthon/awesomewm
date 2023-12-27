@@ -12,22 +12,27 @@ local theme = {}
 FONT_SIZE = 8
 theme.font          = "sans " .. FONT_SIZE
 
-theme.bg_focus      = "#5f1f9fef"
-theme.bg_normal     = "#00000092"
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#3f3f40"
+local primary = "#5f1f9f"
+local secondary = "#000000"
+local tertiary = "#3f3f40"
+
+theme.bg_focus      = primary .. "ef"
+theme.bg_normal     = secondary .. "92"
+theme.bg_minimize   = tertiary
 theme.bg_systray    = theme.bg_normal
+theme.bg_urgent     = "#ff0000"
 
 theme.fg_normal     = "#cccccc"
 theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#dfff13"
 theme.fg_minimize   = "#bbbbbb"
+theme.fg_urgent     = "#dfff13"
 
-theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(0)
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
+
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(0)
 
 -- There are other variable sets
 -- overriding the default one when
