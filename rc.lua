@@ -246,14 +246,19 @@ awful.screen.connect_for_each_screen(function(s)
         buttons         = tasklist_buttons,
 
         style           = {
-            shape_border_width = 1,
+            shape_border_width = 0,
             shape_border_color = beautiful.border_normal,
             shape              = gears.shape.rectangle,
         },
         layout          = {
-            layout = wibox.layout.flex.horizontal
+            layout = wibox.layout.flex.horizontal,
         },
         widget_template = {
+            wibox.widget.base.make_widget(),
+            create_callback = function(self, c, index, objects) --luacheck: no unused args
+                self:get_children_by_id('clienticon')[1].client = c
+            end,
+            layout = wibox.layout.align.vertical,
             forced_height = WIBOX_HEIGHT,
             {
                 {
@@ -264,24 +269,19 @@ awful.screen.connect_for_each_screen(function(s)
                         forced_height = WIBOX_HEIGHT,
                         forced_width = WIBOX_HEIGHT,
                     },
-                    top    = 0,
-                    bottom = 0,
-                    left   = 16,
-                    right  = 16,
-                    halign = 'center',
-                    widget = wibox.container.margin,
+                    top           = 0,
+                    bottom        = 0,
+                    left          = 16,
+                    right         = 16,
+                    halign        = 'center',
+                    widget        = wibox.container.margin,
                     forced_height = WIBOX_HEIGHT,
                 },
-                halign = 'center',
-                id     = 'background_role',
-                widget = wibox.container.background,
+                halign        = 'center',
+                id            = 'background_role',
+                widget        = wibox.container.background,
                 forced_height = WIBOX_HEIGHT,
-
             },
-            create_callback = function(self, c, index, objects) --luacheck: no unused args
-                self:get_children_by_id('clienticon')[1].client = c
-            end,
-            layout = wibox.layout.align.vertical,
         },
     }
 
@@ -289,7 +289,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({
         position = "top",
         bg = '#00000000',
-        screen = s
+        -- bg = '#ff00ff',
+        screen = s,
     })
 
     -- Add widgets to the wibox
@@ -573,7 +574,7 @@ awful.rules.rules = {
     {
         rule_any = {
             instance = {
-                "DTA", -- Firefox addon DownThemAll.
+                "DTA",   -- Firefox addon DownThemAll.
                 "copyq", -- Includes session name in class.
                 "pinentry",
             },
@@ -582,7 +583,7 @@ awful.rules.rules = {
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
-                "MessageWin", -- kalarm.
+                "MessageWin",  -- kalarm.
                 "Sxiv",
                 "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
                 "Wpa_gui",
@@ -595,9 +596,9 @@ awful.rules.rules = {
                 "Event Tester", -- xev.
             },
             role = {
-                "AlarmWindow", -- Thunderbird's calendar.
+                "AlarmWindow",   -- Thunderbird's calendar.
                 "ConfigManager", -- Thunderbird's about:config.
-                "pop-up",  -- e.g. Google Chrome's (detached) Developer Tools.
+                "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
         properties = { floating = true }
@@ -675,14 +676,11 @@ end)
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", { raise = false })
 end)
-
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
 -- custom config
 beautiful.useless_gap = 8
-require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/pics/wallpaper/" .. WALLPAPER .. ".jpg",
+require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/.config/awesome/wallpaper/" .. WALLPAPER .. ".jpg",
     require("awful").screen.focused())
 
 -- start picom compositor
