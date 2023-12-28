@@ -24,7 +24,7 @@ M.view_toggle = function(t)
 end
 
 -- move the currently focused client to the previously selected tags
-M.move_client_to_previous_tags = function(client)
+M.move_client_to_previous_tags = function(client, toggle_instead_of_move)
   -- if there are no previous tags or no focused client, do nothing
   if not M.previous_tags then return end
   if not client.focus then return end
@@ -37,7 +37,11 @@ M.move_client_to_previous_tags = function(client)
 
   -- get the currently focused client and move it to the first tag
   local focused_client = client.focus
-  focused_client:move_to_tag(tag_or_tags)
+  if toggle_instead_of_move then
+    focused_client:toggle_tag(tag_or_tags)
+  else
+    focused_client:move_to_tag(tag_or_tags)
+  end
 
   -- toggle the remaining tags in the previous_tags table
   for i = 2, #M.previous_tags do
