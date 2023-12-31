@@ -50,7 +50,7 @@ theme.taglist_fg_empty = theme.bg_minimize
 theme.tooltip_bg_color = theme.bg_normal
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(FONT_SIZE / 5 * 4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
