@@ -7,7 +7,7 @@ WALLPAPER = ""
 THEME = require("theme")
 
 -- Call the Bash script with the THEME as an argument
-local status = os.execute("./verify_themes.sh " .. THEME)
+local status = os.execute("./verify_theme.bash " .. THEME)
 if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
