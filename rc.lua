@@ -700,4 +700,4 @@ require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/.config/
     require("awful").screen.focused())
 
 -- start picom compositor
-awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf -b")
+awful.spawn.with_shell("./picom.bash")
