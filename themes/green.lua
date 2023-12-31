@@ -31,6 +31,9 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
+theme.tasklist_bg_focus = primary
+theme.tasklist_bg_normal = secondary .. "cc"
+
 theme.hotkeys_modifiers_fg = primary
 theme.hotkeys_bg = tertiary .. "dd"
 
