@@ -31,11 +31,11 @@ theme.border_normal = "#00000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
-theme.tasklist_bg_focus = primary .. "b3"
+theme.tasklist_bg_focus = primary
 theme.tasklist_bg_normal = secondary .. "cc"
 
 theme.taglist_fg_focus = tertiary
-theme.taglist_bg_focus = primary .. "b3"
+theme.taglist_bg_focus = primary
 theme.taglist_fg_empty = "#406965"
 theme.taglist_fg_occupied = secondary
 
