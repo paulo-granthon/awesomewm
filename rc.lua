@@ -695,6 +695,7 @@ end)
 
 -- custom appearance configs
 beautiful.useless_gap = 8
+beautiful.notification_border_color = "#00000000"
 require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/.config/awesome/wallpaper/" .. WALLPAPER .. ".jpg",
     require("awful").screen.focused())
 
