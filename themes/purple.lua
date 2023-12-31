@@ -31,6 +31,9 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
+theme.hotkeys_modifiers_fg = primary
+theme.hotkeys_bg = tertiary .. "dd"
+
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(0)
 

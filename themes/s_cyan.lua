@@ -42,6 +42,7 @@ theme.tooltip_bg_color = secondary
 theme.prompt_bg = theme.bg_minimize
 theme.prompt_fg = theme.bg_focus
 
+theme.hotkeys_modifiers_fg = primary
 theme.hotkeys_bg = tertiary .. "dd"
 
 theme.useless_gap   = dpi(0)
