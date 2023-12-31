@@ -12,8 +12,6 @@ if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
 
-print("Selected theme:", THEME)
-
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
