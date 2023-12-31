@@ -6,8 +6,10 @@ pcall(require, "luarocks.loader")
 WALLPAPER = ""
 THEME = require("theme")
 
+AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
+
 -- Call the Bash script with the THEME as an argument
-local status = os.execute("./verify_theme.bash " .. THEME)
+local status = os.execute(AWESOME_HOME .. "/verify_theme.bash " .. THEME)
 if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
@@ -696,8 +698,8 @@ end)
 -- custom appearance configs
 beautiful.useless_gap = 8
 beautiful.notification_border_color = "#00000000"
-require("gears").wallpaper.maximized("/home/" .. os.getenv("USER") .. "/.config/awesome/wallpaper/" .. WALLPAPER .. ".jpg",
+require("gears").wallpaper.maximized(AWESOME_HOME .. "/wallpaper/" .. WALLPAPER .. ".jpg",
     require("awful").screen.focused())
 
 -- start picom compositor
-awful.spawn.with_shell("./picom.bash")
+awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
