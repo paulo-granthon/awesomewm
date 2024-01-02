@@ -14,7 +14,7 @@ if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
 
-beautiful.init(string.format("%s/.config/awesome/themes/" .. THEME .. ".lua", os.getenv("HOME")))
+beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
 
 -- Standard awesome library
 local gears = require("gears")
