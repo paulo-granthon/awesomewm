@@ -1,14 +1,12 @@
 #!/bin/bash
 
-directory='./themes/'
-
-# Get the THEME argument passed to the script
+DIRECTORY="$HOME/.config/awesome/themes/"
 THEME="$1"
 
-for file in "$directory"*.lua; do
+for file in "$DIRECTORY"*.lua; do
     if [ -f "$file" ]; then
         moduleName=$(basename "$file" .lua)
-        echo "$moduleName"
+        echo "this file is in dir: $moduleName"
         if [ "$moduleName" != "$file" ]; then
             if [ "$moduleName" == "$THEME" ]; then
                 echo "The '$THEME' theme exists in directory"
