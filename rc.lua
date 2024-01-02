@@ -2,20 +2,6 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- load the theme from theme.lua
-WALLPAPER = ""
-THEME = require("theme")
-
-AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
-
--- Call the Bash script with the THEME as an argument
-local status = os.execute(AWESOME_HOME .. "/verify_theme.bash " .. THEME)
-if status == 1 then
-    THEME = 'purple' -- Default theme in case of an error
-end
-
-beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
-
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -32,6 +18,19 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- load the theme from theme.lua
+WALLPAPER = ""
+THEME = require("theme")
+
+AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
+
+-- Call the Bash script with the THEME as an argument
+local status = os.execute(AWESOME_HOME .. "/verify_theme.bash " .. THEME)
+if status == 1 then
+    THEME = 'purple' -- Default theme in case of an error
+end
+
+beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
 
 -- awesome-wm-widgets
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
