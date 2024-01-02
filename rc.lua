@@ -14,6 +14,8 @@ if status == 1 then
     THEME = 'purple' -- Default theme in case of an error
 end
 
+beautiful.init(string.format("%s/.config/awesome/themes/" .. THEME .. ".lua", os.getenv("HOME")))
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -85,11 +87,6 @@ do
     end)
 end
 -- }}}
-
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init(string.format("%s/.config/awesome/themes/" .. THEME .. ".lua", os.getenv("HOME")))
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
