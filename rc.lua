@@ -1,6 +1,7 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
+require('utils.capture')
 
 -- Standard awesome library
 local gears = require("gears")
@@ -19,19 +20,33 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- load the theme from theme.lua
-WALLPAPER = ""
-THEME = require("theme")
-DEFAULT_THEME = 'purple'
+-- local theme_file_path = require("theme")
+local theme_file_path = 's_yellow'
+
+THEME = require('themes._base')
 
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
-beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. DEFAULT_THEME .. ".lua", os.getenv("HOME")))
-
 -- Call the Bash script with the THEME as an argument
-local status = os.execute(AWESOME_HOME .. "/verify_theme.bash " .. THEME)
-if status ~= 1 then
-    beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
+local status = os.capture(
+    AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
+    , true
+)
+
+-- require("naughty").notify({
+--     preset = require("naughty").config.presets.critical,
+--     title = "rc | os.capture",
+--     text = tostring(status)
+-- })
+
+if status then
+    THEME = require('themes.' .. theme_file_path).setup(THEME)
 end
+
+beautiful.init(THEME)
+
+beautiful.useless_gap = 8
+beautiful.notification_border_color = THEME.transparent
 
 -- awesome-wm-widgets
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
@@ -234,7 +249,7 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
-    WIBOX_HEIGHT = FONT_SIZE * 2.5
+    WIBOX_HEIGHT = THEME.font_size * 2.5
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -692,11 +707,12 @@ client.connect_signal("mouse::enter", function(c)
 end)
 -- }}}
 
--- custom appearance configs
-beautiful.useless_gap = 8
-beautiful.notification_border_color = "#00000000"
-require("gears").wallpaper.maximized(AWESOME_HOME .. "/wallpaper/" .. WALLPAPER .. ".jpg",
-    require("awful").screen.focused())
+if THEME.wallpaper then
+    require("gears").wallpaper.maximized(
+        AWESOME_HOME .. "/wallpaper/" .. THEME.wallpaper .. ".jpg",
+        awful.screen.focused()
+    )
+end
 
 -- start picom compositor
 awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
