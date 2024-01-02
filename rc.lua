@@ -21,16 +21,17 @@ require("awful.hotkeys_popup.keys")
 -- load the theme from theme.lua
 WALLPAPER = ""
 THEME = require("theme")
+DEFAULT_THEME = 'purple'
 
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
+beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. DEFAULT_THEME .. ".lua", os.getenv("HOME")))
+
 -- Call the Bash script with the THEME as an argument
 local status = os.execute(AWESOME_HOME .. "/verify_theme.bash " .. THEME)
-if status == 1 then
-    THEME = 'purple' -- Default theme in case of an error
+if status ~= 1 then
+    beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
 end
-
-beautiful.init(string.format(AWESOME_HOME .. "/themes/" .. THEME .. ".lua", os.getenv("HOME")))
 
 -- awesome-wm-widgets
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
