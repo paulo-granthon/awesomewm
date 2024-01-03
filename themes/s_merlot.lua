@@ -7,30 +7,31 @@ function M.setup(theme)
 
     local primary = "#80022a"
     local secondary = "#220d1f"
-    local tertiary = "#09010b"
+    local tertiary = "#09030d"
 
     theme.bg_focus      = primary
-    theme.bg_normal     = secondary .. "aa"
+    theme.bg_normal     = secondary .. "c0"
     theme.bg_minimize   = tertiary
     theme.bg_systray    = secondary
-    theme.bg_urgent     = "#ff00ff"
+    theme.bg_urgent     = "#dfff13"
 
-    theme.fg_normal     = "#ffffff"
-    theme.fg_focus      = tertiary
+    theme.fg_focus      = theme.base.colors.off_white
+    theme.fg_normal     = theme.base.colors.white
     theme.fg_minimize   = "#bbbbbb"
-    theme.fg_urgent     = "#dfff13"
+    theme.fg_urgent     = "#ff00ff"
 
     theme.border_normal = "#00000000"
     theme.border_focus  = "#535d6c"
     theme.border_marked = "#91231c"
 
     theme.tasklist_bg_focus = primary
-    theme.tasklist_bg_normal = secondary .. "cc"
+    theme.tasklist_bg_normal = secondary
 
-    theme.taglist_fg_focus = tertiary
+    theme.taglist_fg_focus = theme.base.colors.white
     theme.taglist_bg_focus = primary
-    theme.taglist_fg_empty = "#406965"
-    theme.taglist_fg_occupied = secondary
+    theme.taglist_fg_occupied = primary
+    theme.taglist_bg_occupied = secondary .. "60"
+    theme.taglist_fg_empty = primary
 
     theme.tooltip_bg_color = secondary
 
