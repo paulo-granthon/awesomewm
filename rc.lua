@@ -20,8 +20,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- load the theme from theme.lua
--- local theme_file_path = require("theme")
-local theme_file_path = 's_yellow'
+local theme_file_path = require("theme")
 
 THEME = require('themes._base')
 
@@ -30,7 +29,6 @@ AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 -- Call the Bash script with the THEME as an argument
 local status = os.capture(
     AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
-    , true
 )
 
 -- require("naughty").notify({
@@ -707,9 +705,9 @@ client.connect_signal("mouse::enter", function(c)
 end)
 -- }}}
 
-if THEME.wallpaper then
+if THEME.wallpaper_prefix then
     require("gears").wallpaper.maximized(
-        AWESOME_HOME .. "/wallpaper/" .. THEME.wallpaper .. ".jpg",
+        AWESOME_HOME .. "/wallpaper/" .. THEME.wallpaper_prefix .. ".jpg",
         awful.screen.focused()
     )
 end

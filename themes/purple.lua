@@ -3,7 +3,7 @@ local theme_assets = require("beautiful.theme_assets")
 local M = {}
 
 function M.setup(theme)
-    theme.wallpaper = 'purple'
+    theme.wallpaper_prefix = 'purple'
 
     local primary = "#5f1f9f"
     local secondary = "#000000"
