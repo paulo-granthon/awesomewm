@@ -8,11 +8,11 @@ local themes_path = gfs.get_themes_dir()
 
 local THEME = {}
 
-local white = '#cccccc'
-local transparent = '#00000000'
-local primary = "#555555"
-local secondary = "#333333"
-local tertiary = "#111111"
+THEME.base.colors.white = '#cccccc'
+THEME.base.colors.transparent = '#00000000'
+THEME.base.colors.primary = "#555555"
+THEME.base.colors.secondary = "#333333"
+THEME.base.colors.tertiary = "#111111"
 
 THEME.font_size = 8
 THEME.font = "sans " .. THEME.font_size
@@ -30,11 +30,11 @@ THEME.border_width  = dpi(0)
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
-THEME.bg_focus      = primary
-THEME.bg_normal     = secondary
-THEME.bg_minimize   = tertiary
-THEME.taglist_fg_empty = transparent
-THEME.tooltip_bg_color = transparent
+THEME.bg_focus = THEME.base.colors.primary
+THEME.bg_normal = THEME.base.colors.secondary
+THEME.bg_minimize = THEME.base.colors.tertiary
+THEME.taglist_fg_empty = THEME.base.colors.transparent
+THEME.tooltip_bg_color = THEME.base.colors.transparent
 
 -- Generate taglist squares:
 THEME.taglist_square_size = dpi(THEME.font_size / 5 * 4)
@@ -46,10 +46,12 @@ THEME.taglist_square_size = dpi(THEME.font_size / 5 * 4)
 -- })
 
 THEME.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    THEME.taglist_square_size, white
+    THEME.taglist_square_size,
+    THEME.base.colors.white
 )
 THEME.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    THEME.taglist_square_size, white
+    THEME.taglist_square_size,
+    THEME.base.colors.white
 )
 
 -- Variables set for theming notifications:
