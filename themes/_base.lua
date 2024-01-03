@@ -8,11 +8,16 @@ local themes_path                               = gfs.get_themes_dir()
 
 local THEME                                     = {}
 
-THEME.base.colors.white                         = '#cccccc'
-THEME.base.colors.transparent                   = '#00000000'
-THEME.base.colors.primary                       = "#555555"
-THEME.base.colors.secondary                     = "#333333"
-THEME.base.colors.tertiary                      = "#111111"
+THEME.base = {
+    colors = {
+        white       = '#ffffff',
+        off_white   = '#cccccc',
+        transparent = '#00000000',
+        primary     = "#555555",
+        secondary   = "#333333",
+        tertiary    = "#111111",
+    },
+}
 
 THEME.font_size                                 = 8
 THEME.font                                      = "sans " .. THEME.font_size
@@ -47,11 +52,11 @@ THEME.taglist_square_size                       = dpi(THEME.font_size / 5 * 4)
 
 THEME.taglist_squares_sel                       = theme_assets.taglist_squares_sel(
     THEME.taglist_square_size,
-    THEME.base.colors.white
+    THEME.base.colors.off_white
 )
 THEME.taglist_squares_unsel                     = theme_assets.taglist_squares_unsel(
     THEME.taglist_square_size,
-    THEME.base.colors.white
+    THEME.base.colors.off_white
 )
 
 -- Variables set for theming notifications:
