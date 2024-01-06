@@ -6,10 +6,11 @@ local dpi                                       = xresources.apply_dpi
 local gfs                                       = require("gears.filesystem")
 local themes_path                               = gfs.get_themes_dir()
 
-local THEME                                     = {}
+local THEME = {}
 
 THEME.base = {
     colors = {
+        black       = "#000000",
         white       = '#ffffff',
         off_white   = '#cccccc',
         transparent = '#00000000',
