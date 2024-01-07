@@ -26,6 +26,9 @@ THEME = require('themes._base')
 
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
+-- start picom compositor
+awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
+
 -- Call the Bash script with the THEME as an argument
 local status = os.capture(
     AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
@@ -711,6 +714,3 @@ if THEME.wallpaper_prefix then
         awful.screen.focused()
     )
 end
-
--- start picom compositor
-awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
