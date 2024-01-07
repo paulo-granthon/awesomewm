@@ -1,6 +1,10 @@
 #!/bin/bash
 killall -q picom
 
-while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
+SLEEP_AMOUNT=.001
+
+while pgrep -u $UID -x picom >/dev/null; do
+    sleep $SLEEP_AMOUNT
+done
 
 picom --config ~/.config/picom/picom.conf -b
