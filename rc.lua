@@ -7,14 +7,18 @@ require('utils.capture')
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -22,38 +26,35 @@ require("awful.hotkeys_popup.keys")
 -- load the theme from theme.lua
 local theme_file_path = require("theme")
 
-THEME = require('themes._base')
-
+-- define the awesome .config/ home
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
 -- start picom compositor
 awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
 
 -- Call the Bash script with the THEME as an argument
-local status = os.capture(
+local verify_theme_result = os.capture(
     AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
 )
 
--- require("naughty").notify({
---     preset = require("naughty").config.presets.critical,
---     title = "rc | os.capture",
---     text = tostring(status)
--- })
+-- load the base theme
+THEME = require('themes._base')
 
-if status then
+-- Theme verified and present. Set it up
+if verify_theme_result then
     THEME = require('themes.' .. theme_file_path).setup(THEME)
 end
 
+-- Apply theme to `beautiful`
 beautiful.init(THEME)
 
+-- setup some other beautiful configs
 beautiful.useless_gap = 8
 beautiful.notification_border_color = THEME.transparent
 
 -- awesome-wm-widgets
 local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
-
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
-
 local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
 local volume_widget_instance = volume_widget {
     mixer_cmd = nil,
