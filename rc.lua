@@ -3,6 +3,8 @@
 pcall(require, "luarocks.loader")
 require('utils.capture')
 
+local advanced_tag_controls = require('advanced_tag_controls')
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -174,13 +176,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-    awful.button({}, 1, function(t) t:view_only() end),
+    awful.button({}, 1, function(t) advanced_tag_controls.view_only(t) end),
     awful.button({ modkey }, 1, function(t)
         if client.focus then
             client.focus:move_to_tag(t)
         end
     end),
-    awful.button({}, 3, awful.tag.viewtoggle),
+    awful.button({}, 3, advanced_tag_controls.view_toggle),
     awful.button({ modkey }, 3, function(t)
         if client.focus then
             client.focus:toggle_tag(t)
@@ -454,7 +456,9 @@ globalkeys = gears.table.join(
 
     -- screenshot with custom script
     awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
-    awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end)
+    awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end),
+
+    awful.key({ modkey, "Shift" }, "Escape", function() advanced_tag_controls.move_client_to_previous_tags(client) end)
 )
 
 clientkeys = gears.table.join(
@@ -513,7 +517,7 @@ for i = 1, 9 do
                 local screen = awful.screen.focused()
                 local tag = screen.tags[i]
                 if tag then
-                    tag:view_only()
+                    advanced_tag_controls.view_only(tag)
                 end
             end,
             { description = "view tag #" .. i, group = "tag" }),
@@ -524,7 +528,7 @@ for i = 1, 9 do
                 local screen = awful.screen.focused()
                 local tag = screen.tags[i]
                 if tag then
-                    awful.tag.viewtoggle(tag)
+                    advanced_tag_controls.view_toggle(tag)
                 end
             end,
             { description = "toggle tag #" .. i, group = "tag" }),
