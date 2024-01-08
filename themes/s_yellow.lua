@@ -5,8 +5,8 @@ local M = {}
 function M.setup(theme)
     theme.wallpaper_prefix = 's_yellow'
 
-    local primary = "#a9520c"
-    local secondary = "#948f19"
+    local primary = "#948f19"
+    local secondary = "#a9520c"
     local tertiary = "#361b01"
 
     theme.bg_focus      = primary
