@@ -39,7 +39,10 @@ THEME.border_width                              = dpi(0)
 THEME.bg_focus                                  = THEME.base.colors.primary
 THEME.bg_normal                                 = THEME.base.colors.secondary
 THEME.bg_minimize                               = THEME.base.colors.tertiary
-THEME.taglist_fg_empty                          = THEME.base.colors.transparent
+
+THEME.taglist_fg_occupied                       = THEME.base.colors.primary
+THEME.taglist_fg_empty                          = THEME.base.colors.secondary
+
 THEME.tooltip_bg_color                          = THEME.base.colors.transparent
 
 -- Generate taglist squares:
