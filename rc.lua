@@ -25,19 +25,24 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- load the theme from theme.lua
-local theme_prefix = require("theme")
-
 -- define the awesome .config/ home
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
 -- start picom compositor
 awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
 
+-- load the theme from theme.lua
+local theme_prefix = require("theme")
+
+-- load the theme file from the theme prefix defined in theme.lua
+local theme_file_path = AWESOME_HOME .. "/themes/" .. theme_prefix .. ".lua"
+
 -- Call the Bash script with the THEME as an argument
-local verify_theme_result = os.capture(
-    AWESOME_HOME .. "/verify_theme.bash " .. theme_prefix
+local verify_theme_result, std_out, std_err = os.capture(
+    AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
 )
+local std_out_formatted = std_out ~= nil and std_out ~= '' and std_out or "--EMPTY--"
+local std_err_formatted = std_err ~= nil and std_err ~= '' and std_err or "--EMPTY--"
 
 -- load the base theme
 THEME = require('themes._base')
@@ -49,7 +54,9 @@ else
     naughty.notify({
         preset = naughty.config.presets.critical,
         title = "Theme `" .. theme_prefix .. "` not found",
-        text = "Check if the theme exists in `" .. AWESOME_HOME .. "/themes/`"
+        text = "Check if the theme exists in `" .. theme_file_path .. "`\n"
+            .. "\n" .. "std_out:\n" .. std_out_formatted
+            .. "\n" .. "std_err:\n" .. std_err_formatted
     })
 end
 
