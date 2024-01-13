@@ -45,6 +45,12 @@ THEME = require('themes._base')
 -- Theme verified and present. Set it up
 if verify_theme_result then
     THEME = require('themes.' .. theme_prefix).setup(THEME)
+else
+    naughty.notify({
+        preset = naughty.config.presets.critical,
+        title = "Theme `" .. theme_prefix .. "` not found",
+        text = "Check if the theme exists in `" .. AWESOME_HOME .. "/themes/`"
+    })
 end
 
 -- Apply theme to `beautiful`
