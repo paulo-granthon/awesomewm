@@ -26,7 +26,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- load the theme from theme.lua
-local theme_file_path = require("theme")
+local theme_prefix = require("theme")
 
 -- define the awesome .config/ home
 AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
@@ -36,7 +36,7 @@ awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
 
 -- Call the Bash script with the THEME as an argument
 local verify_theme_result = os.capture(
-    AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
+    AWESOME_HOME .. "/verify_theme.bash " .. theme_prefix
 )
 
 -- load the base theme
@@ -44,7 +44,7 @@ THEME = require('themes._base')
 
 -- Theme verified and present. Set it up
 if verify_theme_result then
-    THEME = require('themes.' .. theme_file_path).setup(THEME)
+    THEME = require('themes.' .. theme_prefix).setup(THEME)
 end
 
 -- Apply theme to `beautiful`
