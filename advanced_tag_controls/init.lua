@@ -48,4 +48,61 @@ M.move_client_to_previous_tags = function(client)
     end
 end
 
+-- close all clients that are only on the given tag
+M.close_active_clients_on_tags = function(tags)
+
+    -- if there is no tag, do nothing
+    if not tags then return end
+
+    if type(tags) ~= "table" then
+        tags = {tags}
+    end
+
+    if #tags < 1 then return end
+
+    -- get all clients on all tags
+    local clients = {}
+    for _, tag in pairs(tags) do
+        for _, client in pairs(tag:clients()) do
+            if not clients[client] then
+                clients[client] = client
+            end
+        end
+    end
+
+    -- if there are no clients, do nothing
+    if not clients then return end
+
+    -- loop through all clients on the tag
+    -- if the client is only on the tag, close it
+    for _, c in pairs(clients) do
+
+        -- skip if client c is minimized
+        if c.minimized then goto continue end
+
+        -- check each tag the client is on
+        -- if the client is on a tag that is not visible, do skip
+        -- otherwise, close the client
+        for _, client_tag in pairs(c:tags()) do
+
+            local client_tag_is_selected = false
+
+            for _, selected_tag in pairs(awful.screen.focused().selected_tags) do
+                if client_tag.index == selected_tag.index then
+                    client_tag_is_selected = true
+                    break
+                end
+            end
+
+            if not client_tag_is_selected then
+                goto continue
+            end
+        end
+
+        c:kill()
+
+        ::continue::
+    end
+end
+
 return M
