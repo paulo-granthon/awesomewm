@@ -463,7 +463,11 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
     awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end),
 
-    awful.key({ modkey, "Shift" }, "Escape", function() advanced_tag_controls.move_client_to_previous_tags(client) end)
+    awful.key(
+        { modkey, "Shift" }, "Escape",
+        function() advanced_tag_controls.move_client_to_previous_tags(client) end,
+        { description = "Move focused client to previous active tag(s)", group = "tag (advanced)"}
+    )
 )
 
 clientkeys = gears.table.join(
