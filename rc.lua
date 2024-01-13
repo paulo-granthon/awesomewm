@@ -664,7 +664,7 @@ end)
 
 client.connect_signal("manage", function(c)
     local cairo = require("lgi").cairo
-    local default_icon = "/home/" .. os.getenv("USER") .. "/.config/awesome/icons/arch256.png"
+    local default_icon = AWESOME_HOME .. "/icons/arch256.png"
     if c and c.valid and not c.icon then
         local s = gears.surface(default_icon)
         local img = cairo.ImageSurface.create(cairo.Format.ARGB32, s:get_width(), s:get_height())
