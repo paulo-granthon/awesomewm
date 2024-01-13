@@ -270,7 +270,7 @@ awful.screen.connect_for_each_screen(function(s)
             shape              = gears.shape.rectangle,
         },
         layout          = {
-            layout = wibox.layout.flex.horizontal,
+            layout = wibox.layout.fixed.horizontal,
         },
         widget_template = {
             wibox.widget.base.make_widget(),
@@ -316,6 +316,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox:setup {
         expand = "none",
         layout = wibox.layout.align.horizontal,
+        forced_height = WIBOX_HEIGHT,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 16,
@@ -325,14 +326,18 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         {             -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            spacing = 16,
-            -- mykeyboardlayout,
-            wibox.widget.systray(),
-            volume_widget_instance,
-            mytextclock,
-            s.mylayoutbox,
-            -- mylauncher,
+            widget = wibox.widget {
+                {
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = 16,
+                    wibox.widget.systray(),
+                    volume_widget_instance,
+                    mytextclock,
+                },
+                layout = wibox.layout.fixed.horizontal,
+                widget = wibox.container.background,
+                s.mylayoutbox,
+            },
         },
     }
 end)
