@@ -282,11 +282,11 @@ awful.screen.connect_for_each_screen(function(s)
             {
                 {
                     {
-                        id     = 'clienticon',
-                        widget = awful.widget.clienticon,
-                        halign = 'center',
+                        id            = 'clienticon',
+                        widget        = awful.widget.clienticon,
+                        halign        = 'center',
                         forced_height = WIBOX_HEIGHT,
-                        forced_width = WIBOX_HEIGHT,
+                        forced_width  = WIBOX_HEIGHT,
                     },
                     top           = 0,
                     bottom        = 0,
@@ -346,8 +346,8 @@ end)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({}, 3, function() mymainmenu:toggle() end)
-    -- awful.button({}, 4, awful.tag.viewnext),
-    -- awful.button({}, 5, awful.tag.viewprev)
+-- awful.button({}, 4, awful.tag.viewnext),
+-- awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -462,11 +462,10 @@ globalkeys = gears.table.join(
     -- screenshot with custom script
     awful.key({ modkey }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot") end),
     awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("~/.local/bin/sshot select") end),
-
     awful.key(
         { modkey, "Shift" }, "Escape",
         function() advanced_tag_controls.move_client_to_previous_tags(client) end,
-        { description = "Move focused client to previous active tag(s)", group = "tag (advanced)"}
+        { description = "Move focused client to previous active tag(s)", group = "tag (advanced)" }
     ),
 
     awful.key(
