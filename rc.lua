@@ -558,6 +558,13 @@ local globalkeys = gears.table.join(
   ),
 
   awful.key(
+    { modkey, 'Control', 'Shift' },
+    'Escape',
+    function() advanced_tag_controls.move_client_to_previous_tags(client, true) end,
+    { description = 'Toggle focused client on previous active tag(s)', group = 'tag (advanced)' }
+  ),
+
+  awful.key(
     { modkey, 'Shift' },
     'q',
     function() advanced_tag_controls.close_active_clients_on_tags(awful.screen.focused().selected_tags) end,
