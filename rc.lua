@@ -550,6 +550,8 @@ local globalkeys = gears.table.join(
   -- screenshot with custom script
   awful.key({ modkey }, 'Print', function() awful.spawn.with_shell('~/.local/bin/sshot') end),
   awful.key({ modkey, 'Control' }, 'Print', function() awful.spawn.with_shell('~/.local/bin/sshot select') end),
+
+  -- advanced_tag_controls
   awful.key(
     { modkey, 'Shift' },
     'Escape',
