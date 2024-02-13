@@ -751,7 +751,8 @@ if THEME.wallpaper_prefix then
     if file == nil then
         naughty.notify({
             preset = naughty.config.presets.critical,
-            title = "Error: wallpaper not found: `" .. THEME.wallpaper_prefix .. "` defined in `" .. theme_file_path.. "` not found",
+            title = "Error: wallpaper not found: `" ..
+            THEME.wallpaper_prefix .. "` defined in `" .. theme_file_path .. "` not found",
             text = "Check if the wallpaper exists in path: `" .. wallpaper_path .. "`"
         })
     else
