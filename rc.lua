@@ -1,7 +1,7 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-require('utils.capture')
+local os_capture = require('utils.capture')
 
 local advanced_tag_controls = require('advanced_tag_controls')
 local brightness_widget = require("brightness-widget")
@@ -40,7 +40,7 @@ local theme_prefix = require("theme")
 local theme_file_path = AWESOME_HOME .. "/themes/" .. theme_prefix .. ".lua"
 
 -- Call the Bash script with the THEME as an argument
-local verify_theme_result, std_out, std_err = os.capture(
+local verify_theme_result, std_out, std_err = os_capture(
     AWESOME_HOME .. "/verify_theme.bash " .. theme_file_path
 )
 local std_out_formatted = std_out ~= nil and std_out ~= '' and std_out or "--EMPTY--"

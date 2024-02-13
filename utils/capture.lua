@@ -1,4 +1,6 @@
-function os.capture(command)
+local M = {}
+
+function M.os_capture(command)
     local tmpfile = '/tmp/lua_execute_tmp_file'
     local exit = os.execute(command .. ' > ' .. tmpfile .. ' 2> ' .. tmpfile .. '.err')
 
@@ -19,3 +21,5 @@ function os.capture(command)
 
     return exit, stdout, stderr
 end
+
+return M
