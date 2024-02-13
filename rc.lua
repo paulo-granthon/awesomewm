@@ -339,18 +339,16 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         {             -- Right widgets
-            widget = wibox.widget {
-                {
-                    layout = wibox.layout.fixed.horizontal,
-                    spacing = 16,
-                    wibox.widget.systray(),
-                    volume_widget_instance,
-                    mytextclock,
-                },
+            {
                 layout = wibox.layout.fixed.horizontal,
-                widget = wibox.container.background,
-                s.mylayoutbox,
+                spacing = 16,
+                wibox.widget.systray(),
+                volume_widget_instance,
+                mytextclock,
             },
+            layout = wibox.layout.fixed.horizontal,
+            widget = wibox.container.background,
+            s.mylayoutbox,
         },
     }
 end)
