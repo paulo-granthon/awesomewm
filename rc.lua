@@ -7,6 +7,8 @@ local advanced_tag_controls = require('advanced_tag_controls')
 local brightness_widget = require('brightness-widget')
 local batteryarc_widget = require('awesome-wm-widgets.batteryarc-widget.batteryarc')
 
+local local_configs = require('local')
+
 -- Standard awesome library
 local gears = require('gears')
 local awful = require('awful')
