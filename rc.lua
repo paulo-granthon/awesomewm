@@ -5,6 +5,7 @@ require('utils.capture')
 
 local advanced_tag_controls = require('advanced_tag_controls')
 local brightness_widget = require("brightness-widget")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 
 -- Standard awesome library
 local gears = require("gears")
@@ -344,6 +345,10 @@ awful.screen.connect_for_each_screen(function(s)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 16,
                 wibox.widget.systray(),
+                batteryarc_widget({
+                    show_current_level = true,
+                    arc_thickness = 3,
+                }),
                 brightness_widget {
                     step = 2,
                 },
