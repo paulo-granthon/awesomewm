@@ -3,8 +3,6 @@ local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local spawn = require("awful.spawn")
 local gfs = require("gears.filesystem")
-local naughty = require("naughty")
-local beautiful = require("beautiful")
 
 local ICON_DIR = gfs.get_configuration_dir() .. "awesome-wm-widgets/brightness-widget/"
 local get_brightness_cmd
