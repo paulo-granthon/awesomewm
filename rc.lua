@@ -4,6 +4,7 @@ pcall(require, "luarocks.loader")
 require('utils.capture')
 
 local advanced_tag_controls = require('advanced_tag_controls')
+local brightness_widget = require("brightness-widget")
 
 -- Standard awesome library
 local gears = require("gears")
@@ -343,6 +344,9 @@ awful.screen.connect_for_each_screen(function(s)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 16,
                 wibox.widget.systray(),
+                brightness_widget {
+                    step = 2,
+                },
                 volume_widget_instance,
                 mytextclock,
             },
