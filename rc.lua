@@ -28,7 +28,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- define the awesome .config/ home
-AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
+local AWESOME_HOME = "/home/" .. os.getenv("USER") .. "/.config/awesome"
 
 -- start picom compositor
 awful.spawn.with_shell(AWESOME_HOME .. "/picom.bash")
@@ -47,7 +47,7 @@ local std_out_formatted = std_out ~= nil and std_out ~= '' and std_out or "--EMP
 local std_err_formatted = std_err ~= nil and std_err ~= '' and std_err or "--EMPTY--"
 
 -- load the base theme
-THEME = require('themes._base')
+local THEME = require('themes._base')
 
 -- Theme verified and present. Set it up
 if verify_theme_result then
@@ -123,16 +123,16 @@ end
 -- }}}
 
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
+local terminal = "alacritty"
+local editor = os.getenv("EDITOR") or "nvim"
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -157,7 +157,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
     { "hotkeys",     function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
     { "manual",      terminal .. " -e man awesome" },
     { "edit config", editor_cmd .. " " .. awesome.conffile },
@@ -165,7 +165,7 @@ myawesomemenu = {
     { "quit",        function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({
+local mymainmenu = awful.menu({
     items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
         { "open terminal", terminal },
         { "firefox",       "firefox" },
@@ -173,10 +173,10 @@ mymainmenu = awful.menu({
     }
 })
 
-mylauncher = awful.widget.launcher({
-    image = beautiful.awesome_icon,
-    menu = mymainmenu
-})
+-- local mylauncher = awful.widget.launcher({
+--     image = beautiful.awesome_icon,
+--     menu = mymainmenu
+-- })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -271,7 +271,7 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
-    WIBOX_HEIGHT = THEME.font_size * 2.5
+    local WIBOX_HEIGHT = THEME.font_size * 2.5
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -372,7 +372,7 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
-globalkeys = gears.table.join(
+local globalkeys = gears.table.join(
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),
     awful.key({ modkey, }, "Left", awful.tag.viewprev,
@@ -495,7 +495,7 @@ globalkeys = gears.table.join(
     )
 )
 
-clientkeys = gears.table.join(
+local clientkeys = gears.table.join(
     awful.key({ modkey }, "f",
         function(c)
             c.fullscreen = not c.fullscreen
@@ -593,7 +593,7 @@ for i = 1, 9 do
     )
 end
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)
         c:emit_signal("request::activate", "mouse_click", { raise = true })
     end),
