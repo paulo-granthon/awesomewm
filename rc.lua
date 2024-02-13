@@ -322,11 +322,11 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.fixed.horizontal,
         spacing = 16,
         wibox.widget.systray(),
-        batteryarc_widget({
+        local_configs.use_batteryarc_widget and batteryarc_widget({
           show_current_level = true,
           arc_thickness = 3,
         }),
-        brightness_widget({
+        local_configs.use_brightness_widget and brightness_widget({
           step = 2,
         }),
         volume_widget_instance,
