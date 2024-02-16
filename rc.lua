@@ -7,8 +7,6 @@ local advanced_tag_controls = require('advanced_tag_controls')
 local brightness_widget = require('brightness-widget')
 local batteryarc_widget = require('awesome-wm-widgets.batteryarc-widget.batteryarc')
 
-local local_configs = require('local')
-
 -- Standard awesome library
 local gears = require('gears')
 local awful = require('awful')
@@ -19,15 +17,33 @@ local wibox = require('wibox')
 
 -- Theme handling library
 local beautiful = require('beautiful')
-
--- Notification library
 local naughty = require('naughty')
+
 local menubar = require('menubar')
 local hotkeys_popup = require('awful.hotkeys_popup')
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require('awful.hotkeys_popup.keys')
+
+local local_configs
+local local_configs_ok, local_configs_or_err = pcall(require, 'local')
+if local_configs_ok then
+  local_configs = local_configs_or_err
+else
+  naughty.notify({
+    preset = naughty.config.presets.critical,
+    title = 'Local configs not found',
+    text = 'Create a file `local.lua` in the root of the `awesome` directory',
+    timeout = 5,
+  })
+  local_configs = require('local_example')
+  naughty.notify({
+    preset = naughty.config.presets.normal,
+    title = 'Using example local configs',
+    text = 'Copy the `local.example.lua` to `local.lua` and modify it to your needs',
+  })
+end
 
 -- define the awesome .config/ home
 local AWESOME_HOME = '/home/' .. os.getenv('USER') .. '/.config/awesome'
