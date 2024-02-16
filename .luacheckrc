@@ -1,4 +1,5 @@
-read_globals = {
+globals = {
+  'globals',
   'awesome',
   'client',
   'screen',
