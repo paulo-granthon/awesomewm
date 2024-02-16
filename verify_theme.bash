@@ -19,7 +19,7 @@ for file in "$DIRECTORY/"*.lua; do
         moduleName=$(basename "$file" .lua)
 
         if [ "$moduleName" != "$file" ]; then
-            if [ "$moduleName" == "$THEME" ]; then
+            if [ "$moduleName" == "$(basename "$THEME" .lua)" ]; then
 
                 echo "The '$THEME' theme exists in directory"
                 exit 0
