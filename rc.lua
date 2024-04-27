@@ -566,6 +566,9 @@ local globalkeys = gears.table.join(
     { description = 'Toggle focused client on previous active tag(s)', group = 'tag (advanced)' }
   ),
 
+  -- todo: minimize all active clients on active tags (not minimized) and save to a list
+  -- so that it is possible restore later with a single command
+
   awful.key(
     { modkey, 'Shift' },
     'q',
