@@ -4,4 +4,8 @@ globals = {
   'client',
   'screen',
   'root',
+  'describe',
+  'it',
+  'assert',
+  'are',
 }
