@@ -3,6 +3,8 @@
 pcall(require, 'luarocks.loader')
 local os_capture = require('utils.capture')
 
+local tag_count = 10
+
 local advanced_tag_controls = require('advanced_tag_controls')
 local brightness_widget = require('brightness-widget')
 local batteryarc_widget = require('awesome-wm-widgets.batteryarc-widget.batteryarc')
@@ -26,8 +28,8 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 -- when client with a matching name is opened:
 require('awful.hotkeys_popup.keys')
 
-local local_configs
 local local_configs_ok, local_configs_or_err = pcall(require, 'local')
+local local_configs
 if local_configs_ok then
   local_configs = local_configs_or_err
 else
