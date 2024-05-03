@@ -560,6 +560,13 @@ local globalkeys = gears.table.join(
   ),
 
   awful.key(
+    { modkey, 'Control' },
+    'Escape',
+    function() advanced_tag_controls.toggle_previous_tags() end,
+    { description = 'Toggle visibility on previous active tag(s)', group = 'tag (advanced)' }
+  ),
+
+  awful.key(
     { modkey, 'Control', 'Shift' },
     'Escape',
     function() advanced_tag_controls.move_client_to_previous_tags(client, true) end,

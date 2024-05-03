@@ -23,6 +23,17 @@ M.view_toggle = function(t)
   awful.tag.viewtoggle(t)
 end
 
+-- toggle the visibility of the previously selected tags
+M.toggle_previous_tags = function()
+  -- if there are no previous tags, do nothing
+  if not M.previous_tags then return end
+
+  -- loop through all previous tags and toggle their visibility
+  for _, tag in pairs(M.previous_tags) do
+    awful.tag.viewtoggle(tag)
+  end
+end
+
 -- move the currently focused client to the previously selected tags
 M.move_client_to_previous_tags = function(client, toggle_instead_of_move)
   -- if there are no previous tags or no focused client, do nothing
