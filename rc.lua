@@ -617,7 +617,7 @@ local clientkeys = gears.table.join(
   awful.key({ modkey }, 'm', function(c)
     c.maximized = not c.maximized
     c:raise()
-  end, { description = '(un)maximize', group = 'client' })
+  end, { description = '(un)maximize', group = 'client' }),
   -- awful.key({ modkey, "Control" }, "m",
   --     function (c)
   --         c.maximized_vertical = not c.maximized_vertical
@@ -630,6 +630,37 @@ local clientkeys = gears.table.join(
   --         c:raise()
   --     end ,
   --     {description = "(un)maximize horizontally", group = "client"})
+  awful.key({ modkey }, 'i', function(c)
+    local inspect = require('inspect')
+    naughty.notify({
+      preset = naughty.config.presets.normal,
+      title = 'name: ' .. c.name .. ' | class: ' .. c.class,
+      text = table.concat({
+        'name: ' .. c.name,
+        'class: ' .. c.class,
+        'instance: ' .. c.instance,
+        'type: ' .. c.type,
+        'leader: ' .. inspect(c.leader),
+        'client: ' .. inspect(c.client),
+        'group: ' .. inspect(c.group),
+        'parent: ' .. inspect(c.parent),
+        'transient_for: ' .. inspect(c.transient_for),
+        'window: ' .. inspect(c.window),
+        'width: ' .. inspect(c.width),
+        'height: ' .. inspect(c.height),
+        'border_width: ' .. inspect(c.border_width),
+        'border_color: ' .. inspect(c.border_color),
+        'shape: ' .. inspect(c.shape),
+        'opacity: ' .. inspect(c.opacity),
+        'focus: ' .. inspect(c.focus),
+        'raise: ' .. inspect(c.raise),
+        'keys: ' .. inspect(c.keys),
+        'buttons: ' .. inspect(c.buttons),
+        'screen: ' .. inspect(c.screen),
+        'placement: ' .. inspect(c.placement),
+      }, '\n'),
+    })
+  end, { description = 'toggle minimized', group = 'client' })
 )
 
 -- Bind all key numbers to tags.
