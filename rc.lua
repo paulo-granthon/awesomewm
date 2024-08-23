@@ -254,9 +254,35 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
+local wallpaper_path = nil
+
+if THEME.wallpaper_prefix then
+  wallpaper_path = AWESOME_HOME .. '/wallpaper/' .. THEME.wallpaper_prefix .. '.jpg'
+
+  local file = io.open(wallpaper_path, 'r')
+
+  if file == nil then
+    naughty.notify({
+      preset = naughty.config.presets.critical,
+      title = 'Error: wallpaper not found: `'
+        .. THEME.wallpaper_prefix
+        .. '` defined in `'
+        .. theme_file_path
+        .. '` not found',
+      text = 'Check if the wallpaper exists in path: `' .. wallpaper_path .. '`',
+    })
+  else
+    file:close() -- file only needs to be closed if it is not nil
+  end
+end
+
 awful.screen.connect_for_each_screen(function(s)
   -- Wallpaper
-  set_wallpaper(s)
+  if wallpaper_path ~= nil then
+    require('gears').wallpaper.maximized(wallpaper_path, s)
+  else
+    set_wallpaper(s)
+  end
 
   local tag_name_generator = function(i) return ' ' .. i % tag_count .. ' ' end
 
@@ -861,25 +887,3 @@ client.connect_signal(
   function(c) c:emit_signal('request::activate', 'mouse_enter', { raise = false }) end
 )
 -- }}}
-
-if THEME.wallpaper_prefix then
-  local wallpaper_path = AWESOME_HOME .. '/wallpaper/' .. THEME.wallpaper_prefix .. '.jpg'
-
-  local file = io.open(wallpaper_path, 'r')
-
-  if file == nil then
-    naughty.notify({
-      preset = naughty.config.presets.critical,
-      title = 'Error: wallpaper not found: `'
-        .. THEME.wallpaper_prefix
-        .. '` defined in `'
-        .. theme_file_path
-        .. '` not found',
-      text = 'Check if the wallpaper exists in path: `' .. wallpaper_path .. '`',
-    })
-  else
-    file:close()
-  end
-
-  require('gears').wallpaper.maximized(wallpaper_path, awful.screen.focused())
-end
