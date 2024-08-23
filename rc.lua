@@ -192,9 +192,9 @@ local myawesomemenu = {
 local mymainmenu = awful.menu({
   items = {
     { 'awesome', myawesomemenu, beautiful.awesome_icon },
-    { 'open terminal', terminal },
-    { 'firefox', 'firefox' },
-    { 'files', 'thunar' },
+    { 'open terminal', terminal, menubar.utils.lookup_icon('Alacritty') },
+    { 'firefox', 'firefox', menubar.utils.lookup_icon('firefox') },
+    { 'files', 'thunar', '/usr/share/icons/hicolor/128x128/apps/org.xfce.thunar.png' },
   },
 })
 
