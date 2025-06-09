@@ -195,6 +195,7 @@ local mymainmenu = awful.menu({
     { 'awesome', myawesomemenu, beautiful.awesome_icon },
     { 'open terminal', terminal, menubar.utils.lookup_icon('Alacritty') },
     { 'firefox', 'firefox', menubar.utils.lookup_icon('firefox') },
+    { 'chrome', 'google-chrome-stable', menubar.utils.lookup_icon('google-chrome') },
     { 'files', 'thunar', '/usr/share/icons/hicolor/128x128/apps/org.xfce.thunar.png' },
   },
 })
