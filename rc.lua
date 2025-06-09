@@ -90,6 +90,7 @@ end
 beautiful.init(THEME)
 
 -- setup some other beautiful configs
+beautiful.master_count = 1000
 beautiful.useless_gap = 8
 beautiful.notification_border_color = THEME.transparent
 
